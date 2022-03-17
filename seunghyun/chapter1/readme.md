@@ -61,6 +61,7 @@
 
 - 웹 어플리케이션을 만들기 위한 환경을 제공한다.
   - babel, webpack, es6+ 문법, css 후처리, HMR(hot-module-replacement), test 시스템 등 필수 환경을 구성해준다.
+  - HMR(Hot-Module-Replacement): 웹팩에서 제공하는 기능으로, 모든 종류의 모듈을 새로고침할 필요 없이 런타임에 바로 업데이트 할 수 있다.
 - 직접 구축할 경우 오래걸리면서 버전이 바뀔 경우 유지보수가 필요하다
   - create-react-app은 패키지 버전만 올리면 된다.
 
@@ -68,4 +69,83 @@
 
 - `npx create-react-app < app name >`으로 사용한다.
   - 혹은 `npm install -g create-react-app` 후에 `create-react-app < app name>`을 사용한다
--
+- `npm start`로 프로젝트 시작
+- index.js와 index.html, package.json은 필수 파일
+- index.js에 연결 될 모든 js 파일은 src 폴더 내부에 있어야 한다.
+- 웬만하면 모든 파일은 src에서 관리한다
+- 빌드 시 자동 압축된다
+- 검색 엔진 최적화를 위해서는 Next.js 선택지도 존재한다
+- PWA(Progressive Web App) 기능을 원한다면 serviceWorker.js file과 함게 serviceWorker.register()를 index.js 에 포함시킨다.
+
+### 1.3.2 주요 명령어 알아보기
+
+- 개발모드
+  - `npm start`로 실행
+  - HMR을 통한 수정된 코드 자동 반영
+  - 브라우저에서 error message 확인 가능
+  - https 실행 지원
+    - 맥: `HTTPS=true npm start`
+    - 윈도우: `set HTTPS=true && npm start`
+    - 자체 서명 인증서를 사용해서 경고가 뜨지만 무시해도 무방
+- 빌드
+  - `npm run build`로 실행, 배호 환경에서 사용할 파일 생성
+  - 모든 파일, css, 등이 압축된다
+    - 10kb 미만의 파일은 data:url을 통해서 문자열 형태로 포함
+    - 10kb 이상의 파일은 < 파일이름 >.{해시값}.{확장자}의 형식으로 저장
+- 테스트
+  - `npm test`를 통해서 테스트 실행
+  - create-react-app을 사용하면 jest 기반 테스트 시스템이 자동 구축
+  - test가 진행되는 파일
+    - **test**폴더 밑의 모든 js 파일
+    - 이름이 .test.js, .spec.js로 끝나는 파일
+  - test는 watch 모드로 동작한다.
+    - CI(Continuous Integration)과 같이 watch 모드가 필요없는 경우 watch 없이 test돌릴 수 있다
+      - 맥: `CI=true npm test`
+      - 윈도우: `set "CI=true" && npm test`
+- 설정 파일 추출
+  - `npm run eject`를 사용하면 create-react-app 내부 설정 파일이 노출된다.
+  - 바벨이나 웹팩의 설정을 변경할 수 있다
+  - 리액트 툴체인에 익숙해지고 사용하는 것을 추천
+
+### 1.3.3 자바스크립트 지원 범위
+
+- create-react-app은 ES6 의 모든 기능을 지원한다
+- 그 외 추가된 기능
+  - 지수 연산자
+  - async, await
+  - 나머지 연산자(rest operator), 전개 연산자(spread operator)
+  - 동적 임포트(dynamic import)
+    - 필요한 경우에만 모듈을 import해서 초기 성능을 높인다
+  - 클래스 필드(class field)
+  - JSX 문법
+  - 타입스크립트, 플로 타입 시스템
+    - flow도 타입스크립트처럼 타입을 정의하고 js를 코딩할 수 있는 스크립트
+- core.js를 통해 다양한 polyfill을 사용할 수 있다
+  - polyfill
+    - 자바스크립트의 새로운 feature가 나와도 브라우저에서 지원하지 않는 경우 사용이 불가능
+    - babel을 통해서 기능이 존재하지 않는 경우 선택적으로 변환해서 기능을 사용할 수 있게 하는 것을 polyfill이라고 부른다
+
+### 1.3.4 코드 분할하기
+
+- 코드 분할을 통해 사용자에게 필요한 양의 코드만 내려주면 초기 성능이 좋아진다
+  - 한가지 방법으로 동적 임포트가 있다
+- 동적 분할을 할 시 build 후 별개의 js파일이 생성되어 필요한 경우만 내려받도록 구현된다
+- SPA를 위해 react-router-dom을 이용하는 경우 페이지 단위 코드 분할을 적용할 수 있다.
+
+### 1.3.5 환경변수 사용하기
+
+- create-react-app에서는 빌드 시점에 환경 변수를 코드로 전달할 수 있다.
+- 환경변수는 개발, 테스트, 배포 환경별로 다른 값을 적용할 수 있다.
+- process.env.{환경변수 이름} 으로 접근할 수 있다.
+- NODE_ENV 환경변수 이용하기(어떤 환경인지 확인 가능)
+  - npm start: development
+  - npm test: test
+  - npm run build: production
+- 기타 환경 변수 이용하기
+  - process.env.REACT*APP* 으로 접근 가능
+  - 환경 변수는 shell에서 입력하거나 .env 파일로 입력할 수 있다.
+  - shell
+    - 맥: `REACT_APP_API_URL=api.myapp.com npm start`
+    - 윈도우: `set "REACT_APP_API_URL=api.myapp.com" && npm start`
+  - .env파일
+    - `REACT_APP_API_URL=api.myapp.com`
