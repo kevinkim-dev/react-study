@@ -149,3 +149,28 @@
     - 윈도우: `set "REACT_APP_API_URL=api.myapp.com" && npm start`
   - .env파일
     - `REACT_APP_API_URL=api.myapp.com`
+- autoprefixer
+  - css의 최신 기능을 사용하려면 vendor prefix가 붙은 이름을 사용해야 한다
+    - -webkit, -ms
+  - create-react-app에 포함 된 autoprefixer 패키지를 통해 벤더 접두사를 자동으로 붙일 수 있다.
+
+## 1.4 CSS 작성 방법 결정하기
+
+- 기존의 css 작성 방식은 css 파일을 작성한 후 link태그를 이용해 html에 전달하는 것
+- 순수 css는 재사용이 어려울 수 있기 때문에 SASS(Syntactically Awesome StyleSheet)를 사용하기도 한다.
+  - 변수와 믹스인 개념이 있어서 중복 코드를 많이 줄일 수 있다
+- 응집도가 높은 좋은 컴포넌트를 작성하기 위해 css코드도 컴포넌트 내부에서 관리되면 좋다
+  - css-module, css-in-js 방식으로 관리할 수 있다
+
+### 1.4.1 일반적인 css 파일로 작성하기
+
+- 일반적으로 파일마다 css파일로 분리해서 작성하고 import한다면, 추후 같은 이름을 가진 css 속성은 덮어씌워질 수 있다
+
+### 1.4.2 css-module로 작성하기
+
+- css-module을 통해서 이 충돌을 해결할 수 있다.
+- 간결한 클래스명을 이용해서 컴포넌트 단위로 스타일을 적용할 때 좋다.
+- `{name}.module.css`와 같이 작명한 파일은 css-module이 된다.
+- css-module을 통해서 만들어진 component의 클래스는 해시값을 포함하여 다른 이름과 충돌이 발생하지 않는다.
+- $와 {}로 이루어진 코드를 간결히 하기 위해서 classnames 패키지를 이용할 수 있다.
+  - classnames를 이용해서 조건부로 클래스를 바꿀 수도 있다.
