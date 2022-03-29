@@ -174,3 +174,45 @@
 - css-module을 통해서 만들어진 component의 클래스는 해시값을 포함하여 다른 이름과 충돌이 발생하지 않는다.
 - $와 {}로 이루어진 코드를 간결히 하기 위해서 classnames 패키지를 이용할 수 있다.
   - classnames를 이용해서 조건부로 클래스를 바꿀 수도 있다.
+
+### 1.4.3 Sass로 작성하기
+
+- Sass는 변수, 믹스인 등의 개념을 통해 스타일 코드를 재사용 할 수 있게 해줌으로써 생산성 높은 코드를 작성하게 해준다.
+- `npm install node-sass`로 설치해서 사용한다
+- Sass 문법으로 작성된 파일은 node-sass 패키지로 빌드 단계를 거쳐서 CSS파일로 변환된다.
+- create-react-app으로 생성된 프로젝트엔 Sass를 위한 빌드 시스템이 구축되어 있으며, scss 확장자를 가지는 파일을 불러오면 자동으로 css파일로 컴파일된다.
+
+### 1.4.4 css-in-js로 작성하기
+
+- css 코드를 js 안에서 작성한다
+- css 코드를 변수로 관리할 수 있다.
+- 마크업 팀이 따로 있는 회사라면 적용하기 힘들 수 있다.
+- 가장 유명한 css-in-js 패키지로는 styled-component가 있다
+  - `npm install styled-component`로 설치한다
+- 함수형 컴포넌트를 생성하고 styled.div`` 문법을 사용해서 정의한다
+- 다른 styled component를 상속할 땐 styled(<상속할 styled component이름>)`` 으로 정의한다.
+- styled-component엔 attribute를 넘기고, props를 이용해서 attribute를 이용한 랜더링도 가능하다.
+
+### 1.5 단일 페이지 애플리케이션 만들기
+
+- 리액트 앱의 페이지 전환은 단일 페이지 앱(Single Page Application) 방식으로 개발하는 것이 정석이다.
+- SPA는 초기 요청 시 서버에서 첫 페이지를 처리하고 이후의 라우팅은 클라이언트에서 처리하는 웹 어플리케이션이다.
+- SPA는 랜더링을 서버에서가 아닌 클라이언트에서 수행하기 때문에 페이지 전환 시 깜박이는 단점이 없어지고, 네이티브 앱처럼 자연스럽게 동작한다.
+
+### 1.5.1 브라우저 히스토리 API
+
+- SPA 구현을 위해서 다음 두가지 기능이 필요하다
+  - 자바스크립트에서 브라우저 페이지 전환 요청을 보낼 수 있다.
+    - 단 브라우저는 서버로 요청을 보내지 말아야 한다.
+  - 브라우저의 뒤로가기와 같은 페이지 전환 요청을 자바스크립트에서 처리할 수 있다
+    - 이 역시 서버로 요청을 보내지 말아야 한다
+- 이러한 조건을 만족하는 브라우저 api는 pushState, replaceState, popState 함수이다.
+
+### 1.5.2 react-router-dom 사용하기
+
+- react-router-dom 패키지를 이용하면 브라우저 히스토리 api를 사용하지 않고 쉽게 구현할 수 있다.
+  - react-router-dom도 내부적으로는 브라우저 히스토리 api를 사용한다
+- `npm install react-router-dom`으로 설치
+- react 뿐만 아니라 react native도 지원한다.
+- 현재 설명은 react-router-dom v5인 모양이다.
+-
