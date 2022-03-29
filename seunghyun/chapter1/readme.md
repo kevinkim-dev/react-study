@@ -215,4 +215,3 @@
 - `npm install react-router-dom`으로 설치
 - react 뿐만 아니라 react native도 지원한다.
 - 현재 설명은 react-router-dom v5인 모양이다.
--
